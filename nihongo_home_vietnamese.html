@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>いえのにほんご（べとなむご）</title>
+  <style>
+    :root {
+      --fg:#111; --muted:#555; --line:#e6e6e6; --bg:#fff; --chip:#f7f7f7;
+    }
+    body {
+      margin:0; background:var(--bg); color:var(--fg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+    }
+    .wrap {
+      max-width: 920px; margin: 0 auto; padding: 18px 14px 44px;
+    }
+    h1 { font-size: 22px; margin: 10px 0 6px; }
+    .sub { color:var(--muted); font-size: 14px; line-height:1.5; margin: 0 0 14px; }
+    .topbar {
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      border:1px solid var(--line); border-radius: 14px; padding: 10px; margin: 12px 0 14px;
+      background: #fcfcfc;
+    }
+    .search {
+      flex: 1 1 220px;
+      border:1px solid var(--line); border-radius: 12px; padding: 10px 12px;
+      font-size: 16px;
+    }
+    .pill {
+      font-size: 13px; color: var(--muted);
+      background: var(--chip); border:1px solid var(--line);
+      padding: 8px 10px; border-radius: 999px;
+    }
+    table {
+      width:100%; border-collapse: collapse; border:1px solid var(--line);
+      border-radius: 16px; overflow:hidden; background:#fff;
+    }
+    thead th {
+      text-align:left; font-size: 13px; color: var(--muted);
+      background:#fafafa; padding: 10px 12px; border-bottom:1px solid var(--line);
+    }
+    tbody td { padding: 12px; border-bottom:1px solid var(--line); vertical-align: middle; }
+    tbody tr:last-child td { border-bottom: none; }
+    .jp .text { font-size: 20px; letter-spacing: .02em; }
+    .vi .text { font-size: 16px; color: #222; }
+    .act { width: 160px; }
+    .btn {
+      border:1px solid var(--line); background:#fff; padding: 8px 10px;
+      border-radius: 12px; font-size: 14px; cursor:pointer; margin-right: 8px;
+    }
+    .btn:active { transform: translateY(1px); }
+    .hint { margin-top: 12px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+    @media (min-width: 560px) {
+      h1 { font-size: 26px; }
+      .jp .text { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>いえのにほんご</h1>
+    <p class="sub">にほんご（ひらがな）と べとなむごの たいやくです。みぎの「よむ」で おとがでます（でない けいたいも あります）。</p>
+
+    <div class="topbar">
+      <input id="q" class="search" type="search" placeholder="けんさく（にほんご / べとなむご）" oninput="filterRows()" />
+      <span class="pill" id="count"></span>
+    </div>
+
+    <table aria-label="にほんごとべとなむご">
+      <thead>
+        <tr>
+          <th>にほんご（ひらがな）</th>
+          <th>べとなむご</th>
+          <th>ぼたん</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr>
+      <td class="jp"><span class="text" lang="ja">といれ</span></td>
+      <td class="vi"><span class="text" lang="vi">nhà vệ sinh</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('といれ')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('といれ')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">おふろ</span></td>
+      <td class="vi"><span class="text" lang="vi">tắm / phòng tắm</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('おふろ')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('おふろ')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">つかれた</span></td>
+      <td class="vi"><span class="text" lang="vi">mệt rồi</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('つかれた')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('つかれた')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">ねむい</span></td>
+      <td class="vi"><span class="text" lang="vi">buồn ngủ</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('ねむい')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('ねむい')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">でんわをかける</span></td>
+      <td class="vi"><span class="text" lang="vi">gọi điện</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('でんわをかける')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('でんわをかける')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">さむい</span></td>
+      <td class="vi"><span class="text" lang="vi">lạnh</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('さむい')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('さむい')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">あつい</span></td>
+      <td class="vi"><span class="text" lang="vi">nóng</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('あつい')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('あつい')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">かいものにいきたい</span></td>
+      <td class="vi"><span class="text" lang="vi">muốn đi mua sắm</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('かいものにいきたい')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('かいものにいきたい')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">みず</span></td>
+      <td class="vi"><span class="text" lang="vi">nước</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('みず')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('みず')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">おちゃ</span></td>
+      <td class="vi"><span class="text" lang="vi">trà</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('おちゃ')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('おちゃ')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">ごはん</span></td>
+      <td class="vi"><span class="text" lang="vi">cơm</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('ごはん')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('ごはん')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">たべたい</span></td>
+      <td class="vi"><span class="text" lang="vi">muốn ăn</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('たべたい')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('たべたい')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">のみたい</span></td>
+      <td class="vi"><span class="text" lang="vi">muốn uống</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('のみたい')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('のみたい')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">だいじょうぶ</span></td>
+      <td class="vi"><span class="text" lang="vi">không sao / ổn mà</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('だいじょうぶ')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('だいじょうぶ')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">たすけて</span></td>
+      <td class="vi"><span class="text" lang="vi">giúp tôi với</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('たすけて')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('たすけて')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">ちょっとまって</span></td>
+      <td class="vi"><span class="text" lang="vi">đợi một chút</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('ちょっとまって')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('ちょっとまって')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">わかった</span></td>
+      <td class="vi"><span class="text" lang="vi">hiểu rồi</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('わかった')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('わかった')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">しらない</span></td>
+      <td class="vi"><span class="text" lang="vi">không biết</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('しらない')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('しらない')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">どこ</span></td>
+      <td class="vi"><span class="text" lang="vi">ở đâu</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('どこ')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('どこ')">こぴー</button>
+      </td>
+    </tr>
+<tr>
+      <td class="jp"><span class="text" lang="ja">いっしょにいこう</span></td>
+      <td class="vi"><span class="text" lang="vi">đi cùng nhau nhé</span></td>
+      <td class="act">
+        <button type="button" class="btn" onclick="speakJP('いっしょにいこう')">よむ</button>
+        <button type="button" class="btn" onclick="copyText('いっしょにいこう')">こぴー</button>
+      </td>
+    </tr>
+      </tbody>
+    </table>
+
+    <div class="hint">
+      つかいかた：<br>
+      ・「こぴー」で にほんごを こぴーできます。<br>
+      ・「よむ」は けいたいの せっていにより でないことが あります。<br>
+      ・ことばを ふやしたいときは、ひやまさんが ことばを おくってくれたら すぐ さしかえます。
+    </div>
+  </div>
+
+<script>
+  function copyText(text) {
+    navigator.clipboard?.writeText(text).then(() => {
+      toast("こぴーしました");
+    }).catch(() => {
+      prompt("こぴーできないときは、ここからこぴーしてください。", text);
+    });
+  }
+
+  function speakJP(text) {
+    if (!("speechSynthesis" in window)) {
+      toast("おとが つかえません");
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(text);
+    const voices = window.speechSynthesis.getVoices?.() || [];
+    const ja = voices.find(v => (v.lang || "").toLowerCase().startsWith("ja"));
+    if (ja) u.voice = ja;
+    u.lang = "ja-JP";
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+
+  function filterRows() {
+    const q = (document.getElementById("q").value || "").trim().toLowerCase();
+    const rows = Array.from(document.querySelectorAll("#tbody tr"));
+    let shown = 0;
+    rows.forEach(r => {
+      const jp = r.querySelector(".jp .text")?.textContent?.toLowerCase() || "";
+      const vi = r.querySelector(".vi .text")?.textContent?.toLowerCase() || "";
+      const hit = !q || jp.includes(q) || vi.includes(q);
+      r.style.display = hit ? "" : "none";
+      if (hit) shown++;
+    });
+    document.getElementById("count").textContent = `ひょうじ：${shown} / ${rows.length}`;
+  }
+
+  let tId = null;
+  function toast(msg) {
+    let el = document.getElementById("toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "toast";
+      el.style.position = "fixed";
+      el.style.left = "50%";
+      el.style.bottom = "18px";
+      el.style.transform = "translateX(-50%)";
+      el.style.padding = "10px 12px";
+      el.style.border = "1px solid #e6e6e6";
+      el.style.borderRadius = "14px";
+      el.style.background = "#fff";
+      el.style.boxShadow = "0 8px 24px rgba(0,0,0,.08)";
+      el.style.fontSize = "14px";
+      el.style.zIndex = "9999";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.display = "block";
+    clearTimeout(tId);
+    tId = setTimeout(() => el.style.display = "none", 1200);
+  }
+
+  window.speechSynthesis?.getVoices?.();
+  filterRows();
+</script>
+</body>
+</html>
