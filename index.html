@@ -4,39 +4,96 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>小泉武夫講演会 申込み方法</title>
+
   <style>
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif; margin: 0; background:#fff; color:#111; }
-    .wrap { max-width: 820px; margin: 0 auto; padding: 20px 18px 40px; }
-    h1 { font-size: 22px; margin: 8px 0 14px; }
-    .card { border: 1px solid #e5e5e5; border-radius: 14px; padding: 16px 14px; margin: 14px 0; }
-    .label { font-weight: 700; margin-bottom: 8px; }
-    .email { font-size: 18px; word-break: break-all; }
-    ol { padding-left: 1.2em; margin: 10px 0; }
-    li { margin: 10px 0; line-height: 1.55; }
-    .note { font-size: 14px; color:#333; line-height:1.6; }
-    .btnrow { display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px; }
-    button { padding: 10px 12px; border-radius: 10px; border:1px solid #ddd; background:#fafafa; font-size: 14px; cursor:pointer; }
-    button:active { transform: translateY(1px); }
-    .small { font-size: 12px; color:#555; margin-top: 8px; }
-    @media (min-width: 520px){
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: #111;
+      font-family: system-ui, -apple-system, "Segoe UI",
+                   "Noto Sans JP", Roboto, sans-serif;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 16px;
+    }
+
+    .card {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 16px 14px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .label {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .email {
+      font-size: 18px;
+      word-break: break-all;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* ===== 丸数字（①〜⑥）仕様 ===== */
+    .card ol {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .card ol li {
+      position: relative;
+      padding-left: 2.4em;
+      margin: 0.6em 0;
+      line-height: 1.6;
+    }
+
+    .card ol li::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 600;
+    }
+
+    .card ol li:nth-child(1)::before { content: "①"; }
+    .card ol li:nth-child(2)::before { content: "②"; }
+    .card ol li:nth-child(3)::before { content: "③"; }
+    .card ol li:nth-child(4)::before { content: "④"; }
+    .card ol li:nth-child(5)::before { content: "⑤"; }
+    .card ol li:nth-child(6)::before { content: "⑥"; }
+
+    @media (min-width: 520px) {
       h1 { font-size: 26px; }
       .email { font-size: 20px; }
-      button { font-size: 15px; }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <h1>小泉武夫講演会　申込み方法</h1>
 
     <div class="card">
       <div class="label">申込み先のメールアドレス</div>
-      <div class="email" id="email">lecture.k.sapporo.2026@gmail.com</div>
-      <div class="btnrow">
-        <button type="button" onclick="copyText('lecture.k.sapporo.2026@gmail.com')">メールアドレスをコピー</button>
-        <button type="button" onclick="openMail()">メール作成画面を開く</button>
+      <div class="email">
+        lecture.k.sapporo.2026@gmail.com
       </div>
-      <div class="small">※「メール作成画面を開く」は端末設定により動作が異なる場合があります。</div>
     </div>
 
     <div class="card">
@@ -49,7 +106,9 @@
         <li>電話番号</li>
         <li>メールアドレス</li>
       </ol>
-      <p class="note">申込み受付後、数日内に受付完了と入場No.をお送りいたします。</p>
+      <p class="note">
+        申込み受付後、数日内に受付完了と入場No.をお送りいたします。
+      </p>
     </div>
 
     <div class="card">
@@ -61,34 +120,5 @@
       </p>
     </div>
   </div>
-
-  <script>
-    function copyText(text){
-      navigator.clipboard?.writeText(text).then(()=>{
-        alert("コピーしました");
-      }).catch(()=>{
-        prompt("コピーできない場合は、こちらを長押ししてコピーしてください。", text);
-      });
-    }
-    function openMail(){
-      const to = "lecture.k.sapporo.2026@gmail.com";
-      const subject = "小泉武夫講演会聴講希望";
-      const body =
-`小泉武夫講演会聴講希望
-
-【申込内容】
-①住所：
-②氏名（フルネーム／フリガナ）：
-③年齢：
-④電話番号：
-⑤メールアドレス：
-
-※申込み受付後、数日内に受付完了と入場No.をお送りいたします。`;
-      const url = "mailto:" + encodeURIComponent(to)
-        + "?subject=" + encodeURIComponent(subject)
-        + "&body=" + encodeURIComponent(body);
-      window.location.href = url;
-    }
-  </script>
 </body>
 </html>
